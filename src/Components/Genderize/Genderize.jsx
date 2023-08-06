@@ -47,7 +47,7 @@ export const Genderize = () => {
 				<form className="form" onSubmit={handleSubmit} >
 					<p>
 						<input className="input" placeholder="Insert the name" onChange={handleChange} />
-						<button>Отправить</button>
+						<button>Send</button>
 					</p>
 				</form>
 				<ResultDiv result={finalResult} />
