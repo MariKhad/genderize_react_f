@@ -4,8 +4,6 @@ import { ResultDiv } from "./ResultDiv/ResultDiv";
 
 export const Genderize = () => {
 	const [name, setName] = useState('');
-	const [gender, setGender] = useState('');
-	const [country, setCountry] = useState('');
 	const [result, setResult] = useState('Here will be the result');
 	const handleChange = (e) => {
 		setName(e.target.value)
@@ -22,8 +20,7 @@ export const Genderize = () => {
 			.then(async ([json1, json2]) => {
 				const data1 = await json1.json();
 				const data2 = await json2.json();
-				setGender(data1.gender);
-				setCountry(data2.country[0].country_id);
+				setResult(`${name} is ${data1.gender} from ${data2.country[0].country_id}`);
 			})
 			.catch(err => alert(err))
 	}
@@ -33,10 +30,7 @@ export const Genderize = () => {
 		e.preventDefault();
 		if (name.length > 2) {
 			await fetchDetails();
-			setResult(`${name} is ${gender} from ${country}`);
 			setName('');
-			setCountry('');
-			setGender('');
 		} else {
 			setResult('The name is too short')
 		}
