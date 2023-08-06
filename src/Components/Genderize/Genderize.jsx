@@ -38,7 +38,7 @@ export const Genderize = () => {
 		}
 	}
 
-	const finalResult = () => result;
+	const finalResult = (result) => result;
 
 	return (
 		<div className="container">
