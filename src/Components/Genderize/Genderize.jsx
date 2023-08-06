@@ -14,31 +14,33 @@ export const Genderize = () => {
 	const fetchDetails = async () => {
 		const url1 = `${URL_GENDERIZE}?name=${name}`;
 		const url2 = `${URL_NATIONALIAZE}?name=${name}`;
-		await fetch(url1)
-			.then(response => response.json())
-			.then(result1 => {
-				setGender(result1.gender)
-				fetch(url2)
-					.then(response => response.json())
-					.then(result2 => {
-						setCountry(result2.country[0].country_id)
-					})
+
+		Promise.all([
+			await fetch(url1),
+			await fetch(url2),
+		])
+			.then(async ([json1, json2]) => {
+				const data1 = await json1.json();
+				const data2 = await json2.json();
+				setGender(data1.gender);
+				setCountry(data2.country[0].country_id);
 			})
-			.catch(err => alert(err));
+			.catch(err => alert(err))
 	}
 
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (name.length > 2) {
-			fetchDetails();
+			await fetchDetails();
 			setResult(`${name} is ${gender} from ${country}`);
+			setName('');
+			setCountry('');
+			setGender('');
 		} else {
 			setResult('The name is too short')
 		}
 	}
-
-	const finalResult = result;
 
 	return (
 		<div className="container">
@@ -46,11 +48,11 @@ export const Genderize = () => {
 				<h1>Determination of gender and country by name</h1>
 				<form className="form" onSubmit={handleSubmit} >
 					<p>
-						<input className="input" placeholder="Insert the name" onChange={handleChange} />
+						<input className="input" value={name} placeholder="Insert the name in English" onChange={handleChange} />
 						<button>Send</button>
 					</p>
 				</form>
-				<ResultDiv result={finalResult} />
+				<ResultDiv result={result} />
 			</div>
 		</div>
 	)
