@@ -7,17 +7,9 @@ export const Genderize = () => {
 	const [gender, setGender] = useState('');
 	const [country, setCountry] = useState('');
 	const [result, setResult] = useState('Here will be the result');
-
-	/*	const ref = useRef();
-		  useEffect(() => {
-			let ignore = false;
-				if (!ignore) 
-				fetchDetails();
-			}
-			return () => {
-				ignore = true;
-			}
-		}, [details]); */
+	const handleChange = (e) => {
+		setName(e.target.value)
+	}
 
 	const fetchDetails = async () => {
 		const url1 = `${URL_GENDERIZE}?name=${name}`;
@@ -46,14 +38,7 @@ export const Genderize = () => {
 		}
 	}
 
-
-
-
-	const handleChange = (e) => {
-		setName(e.target.value)
-	}
-
-
+	const finalResult = () => result;
 
 	return (
 		<div className="container">
@@ -65,7 +50,7 @@ export const Genderize = () => {
 						<button>Отправить</button>
 					</p>
 				</form>
-				<ResultDiv result={result} />
+				<ResultDiv result={finalResult} />
 			</div>
 		</div>
 	)
