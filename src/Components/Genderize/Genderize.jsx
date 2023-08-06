@@ -20,7 +20,11 @@ export const Genderize = () => {
 			.then(async ([json1, json2]) => {
 				const data1 = await json1.json();
 				const data2 = await json2.json();
-				setResult(`${name} is ${data1.gender} from ${data2.country[0].country_id}`);
+				if (data1.gender !== null) {
+					setResult(`${name} is ${data1.gender} from ${data2.country[0].country_id}`);
+				} else {
+					setResult('Error, use latin characters for input');
+				}
 			})
 			.catch(err => alert(err))
 	}
